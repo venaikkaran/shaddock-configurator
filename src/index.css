@@ -1,0 +1,79 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-body: 'DM Sans', system-ui, sans-serif;
+  --color-brand-50: #f0f7f4;
+  --color-brand-100: #d9ede2;
+  --color-brand-200: #b5dcc7;
+  --color-brand-300: #84c4a5;
+  --color-brand-400: #55a880;
+  --color-brand-500: #358c65;
+  --color-brand-600: #267150;
+  --color-brand-700: #1f5a41;
+  --color-brand-800: #1b4836;
+  --color-brand-900: #183b2e;
+  --color-brand-950: #0c211a;
+  --color-warm-50: #faf8f5;
+  --color-warm-100: #f3efe8;
+  --color-warm-200: #e6ddd0;
+  --color-warm-300: #d5c6b1;
+  --color-warm-400: #c2a98e;
+  --color-warm-500: #b49474;
+  --color-warm-600: #a78063;
+  --color-warm-700: #8c6a53;
+  --color-warm-800: #725747;
+  --color-warm-900: #5e493c;
+  --color-warm-950: #322520;
+  --color-budget-green: #22c55e;
+  --color-budget-yellow: #eab308;
+  --color-budget-red: #ef4444;
+}
+
+* {
+  font-family: var(--font-body);
+}
+
+h1, h2, h3 {
+  font-family: var(--font-display);
+}
+
+body {
+  margin: 0;
+  background: #faf8f5;
+}
+
+/* Custom scrollbar for sidebar */
+.sidebar-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+.sidebar-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+.sidebar-scroll::-webkit-scrollbar-thumb {
+  background: #d5c6b1;
+  border-radius: 3px;
+}
+.sidebar-scroll::-webkit-scrollbar-thumb:hover {
+  background: #b49474;
+}
+
+/* Smooth selection transitions */
+.option-row {
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+/* Budget bar animation */
+.budget-bar-fill {
+  transition: width 0.4s ease, background-color 0.3s ease;
+}
+
+/* Number input spinner removal */
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type=number] {
+  -moz-appearance: textfield;
+}
