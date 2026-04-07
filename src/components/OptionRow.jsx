@@ -151,6 +151,9 @@ const OptionRow = memo(function OptionRow({
 
         {/* Badges row */}
         <div className="flex flex-wrap items-center gap-1 mt-1">
+          <span className="text-xs bg-stone-200 text-stone-600 rounded px-1.5 py-0.5 font-mono">
+            {optionCode}
+          </span>
           {elevation && (
             <span className="text-xs bg-blue-100 text-blue-700 rounded px-1.5 py-0.5">
               Elev {elevation}
