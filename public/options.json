@@ -7852,6 +7852,106 @@
           "unit": null,
           "needsQuantity": false,
           "isStandard": false
+        },
+        {
+          "optionCode": "920.0301-1B",
+          "elevation": null,
+          "description": "Sprucewood Whirlpool/KitchenAid Appliances: Group 1-B - KSGG700ESS - KitchenAid 30-Inch 5-Burner Gas Slide-In Convection Range(SS)",
+          "price": 130.0,
+          "priceBlank": false,
+          "unit": null,
+          "needsQuantity": false,
+          "isStandard": false
+        },
+        {
+          "optionCode": "920.0301-2A",
+          "elevation": null,
+          "description": "Sprucewood Whirlpool/KitchenAid Appliances: Group II-A - WCG55US0HS/WCG55US6HS - Whirlpool 36-inch Gas Cooktop with EZ-2-Lift Hinged Cast-Iron Grates(SS), WOS51EC0HS - Whirlpool 30\" Smart Single Wall Oven(SS)",
+          "price": 1460.0,
+          "priceBlank": false,
+          "unit": null,
+          "needsQuantity": false,
+          "isStandard": false
+        },
+        {
+          "optionCode": "920.0301-2B",
+          "elevation": null,
+          "description": "Sprucewood Whirlpool/KitchenAid Appliances: Group II-B - WCG55US6HS - Whirlpool 36-inch Gas Cooktop with EZ-2-Lift Hinged Cast-Iron Grates(SS), WOD51EC0HS - Whirlpool 30\" Smart Double Wall Oven(SS)",
+          "price": 2930.0,
+          "priceBlank": false,
+          "unit": null,
+          "needsQuantity": false,
+          "isStandard": false
+        },
+        {
+          "optionCode": "920.0301-03",
+          "elevation": null,
+          "description": "Sprucewood Whirlpool/KitchenAid Appliances: Group III - KCGC506JSS - KitchenAid 36'' 6-Burner Commercial-Style Gas Rangetop(SS), KOSE500ESS - KitchenAid 30\" Single Wall Oven(SS)",
+          "price": 4900.0,
+          "priceBlank": false,
+          "unit": null,
+          "needsQuantity": false,
+          "isStandard": false
+        },
+        {
+          "optionCode": "920.0301-04",
+          "elevation": null,
+          "description": "Sprucewood Whirlpool/KitchenAid Appliances: Group IV - KCGC506JSS - KitchenAid 36'' 6-Burner Commercial-Style Gas Rangetop(SS), KODE300ESS - KitchenAid 30\" Double Wall Oven(SS)",
+          "price": 6400.0,
+          "priceBlank": false,
+          "unit": null,
+          "needsQuantity": false,
+          "isStandard": false
+        },
+        {
+          "optionCode": "920.0301-50",
+          "elevation": null,
+          "description": "Sprucewood Whirlpool/KitchenAid Appliances: WCG55US6HS - Whirlpool 36-inch Gas Cooktop with EZ-2-Lift Hinged Cast-Iron Grates(SS) only (no oven)",
+          "price": 310.0,
+          "priceBlank": false,
+          "unit": null,
+          "needsQuantity": false,
+          "isStandard": false
+        },
+        {
+          "optionCode": "920.0301-51",
+          "elevation": null,
+          "description": "Sprucewood Whirlpool/KitchenAid Appliances: WCG55US6HS - Whirlpool 36-inch Gas Cooktop(SS), WOS51EC0HS - Whirlpool 30\" Smart Single Wall Oven(SS)",
+          "price": 1780.0,
+          "priceBlank": false,
+          "unit": null,
+          "needsQuantity": false,
+          "isStandard": false
+        },
+        {
+          "optionCode": "920.0301-55",
+          "elevation": null,
+          "description": "Sprucewood Whirlpool/KitchenAid Appliances: KCGC506JSS - KitchenAid 36'' 6-Burner Commercial-Style Gas Rangetop(SS), KOSE500ESS - KitchenAid 30\" Single Wall Oven(SS), KMHS120ESS - KitchenAid Over-The-Range Microwave(SS)",
+          "price": 3720.0,
+          "priceBlank": false,
+          "unit": null,
+          "needsQuantity": false,
+          "isStandard": false
+        },
+        {
+          "optionCode": "920.0301-56",
+          "elevation": null,
+          "description": "Sprucewood KitchenAid Appliances I: KCGC506JSS - KitchenAid 36'' 6-Burner Commercial-Style Gas Rangetop(SS), KODE300ESS - KitchenAid 30\" Double Wall Oven(SS), KMHS120ESS - KitchenAid Over-The-Range Microwave(SS)",
+          "price": 6400.0,
+          "priceBlank": false,
+          "unit": null,
+          "needsQuantity": false,
+          "isStandard": false
+        },
+        {
+          "optionCode": "920.0301-57",
+          "elevation": null,
+          "description": "Sprucewood KitchenAid Appliances II: KCGC506JSS - KitchenAid 36'' 6-Burner Commercial-Style Gas Rangetop(SS), KOSE500ESS - KitchenAid 30\" Single Wall Oven(SS), KMHS120ESS - KitchenAid Over-The-Range Microwave(SS)",
+          "price": 4200.0,
+          "priceBlank": false,
+          "unit": null,
+          "needsQuantity": false,
+          "isStandard": false
         }
       ]
     },
@@ -12248,6 +12348,176 @@
           "unit": null,
           "needsQuantity": false,
           "isStandard": false
+        },
+        {
+          "optionCode": "_ENVIPL-SA",
+          "elevation": null,
+          "description": "Sprucewood Standard Plumbing Fixtures Master Bath",
+          "price": 0.0,
+          "priceBlank": false,
+          "unit": null,
+          "needsQuantity": false,
+          "isStandard": true
+        },
+        {
+          "optionCode": "_ENVIPL-SB",
+          "elevation": null,
+          "description": "Sprucewood Standard Master Bath w/Shower",
+          "price": 0.0,
+          "priceBlank": false,
+          "unit": null,
+          "needsQuantity": false,
+          "isStandard": true
+        },
+        {
+          "optionCode": "_ENVIPL-SC",
+          "elevation": null,
+          "description": "Sprucewood Standard Bath 2 Fixtures",
+          "price": 0.0,
+          "priceBlank": false,
+          "unit": null,
+          "needsQuantity": false,
+          "isStandard": true
+        },
+        {
+          "optionCode": "_ENVIPL-SD",
+          "elevation": null,
+          "description": "Sprucewood Standard Bath 3 Fixtures",
+          "price": 0.0,
+          "priceBlank": false,
+          "unit": null,
+          "needsQuantity": false,
+          "isStandard": true
+        },
+        {
+          "optionCode": "_ENVIPL-SE",
+          "elevation": null,
+          "description": "Sprucewood Standard Bath 4 Fixtures",
+          "price": 0.0,
+          "priceBlank": false,
+          "unit": null,
+          "needsQuantity": false,
+          "isStandard": true
+        },
+        {
+          "optionCode": "_ENVIPL-SF",
+          "elevation": null,
+          "description": "Sprucewood Standard Bath 5 Fixtures",
+          "price": 0.0,
+          "priceBlank": false,
+          "unit": null,
+          "needsQuantity": false,
+          "isStandard": true
+        },
+        {
+          "optionCode": "_ENVIPL-SG",
+          "elevation": null,
+          "description": "Sprucewood Standard Bath 6 Fixtures",
+          "price": 0.0,
+          "priceBlank": false,
+          "unit": null,
+          "needsQuantity": false,
+          "isStandard": true
+        },
+        {
+          "optionCode": "_ENVIPL-SH",
+          "elevation": null,
+          "description": "Sprucewood Standard Bath 7 Fixtures",
+          "price": 0.0,
+          "priceBlank": false,
+          "unit": null,
+          "needsQuantity": false,
+          "isStandard": true
+        },
+        {
+          "optionCode": "_ENVIPL-SI",
+          "elevation": null,
+          "description": "Sprucewood Standard Jr. Master Bath Fixtures",
+          "price": 0.0,
+          "priceBlank": false,
+          "unit": null,
+          "needsQuantity": false,
+          "isStandard": true
+        },
+        {
+          "optionCode": "_ENVIPL-SJ",
+          "elevation": null,
+          "description": "Sprucewood Standard Jr. Master Bath Fixtures w/ 1 Vanity",
+          "price": 0.0,
+          "priceBlank": false,
+          "unit": null,
+          "needsQuantity": false,
+          "isStandard": true
+        },
+        {
+          "optionCode": "_ENVIPL-SK",
+          "elevation": null,
+          "description": "Sprucewood Standard Jr. Master Bath Fixtures w/ Tub",
+          "price": 0.0,
+          "priceBlank": false,
+          "unit": null,
+          "needsQuantity": false,
+          "isStandard": true
+        },
+        {
+          "optionCode": "_ENVIPL-SL",
+          "elevation": null,
+          "description": "Sprucewood Standard Guest Bath Fixtures",
+          "price": 0.0,
+          "priceBlank": false,
+          "unit": null,
+          "needsQuantity": false,
+          "isStandard": true
+        },
+        {
+          "optionCode": "_ENVIPL-SM",
+          "elevation": null,
+          "description": "Sprucewood Standard Jack & Jill Fixtures",
+          "price": 0.0,
+          "priceBlank": false,
+          "unit": null,
+          "needsQuantity": false,
+          "isStandard": true
+        },
+        {
+          "optionCode": "_ENVIPL-SN",
+          "elevation": null,
+          "description": "Sprucewood Standard Pool Bath Fixtures",
+          "price": 0.0,
+          "priceBlank": false,
+          "unit": null,
+          "needsQuantity": false,
+          "isStandard": true
+        },
+        {
+          "optionCode": "_ENVIPL-SO",
+          "elevation": null,
+          "description": "Sprucewood Standard Powder Bath Fixtures",
+          "price": 0.0,
+          "priceBlank": false,
+          "unit": null,
+          "needsQuantity": false,
+          "isStandard": true
+        },
+        {
+          "optionCode": "_ENVIPL-SP",
+          "elevation": null,
+          "description": "Sprucewood Standard Powder Bath 2 Fixtures",
+          "price": 0.0,
+          "priceBlank": false,
+          "unit": null,
+          "needsQuantity": false,
+          "isStandard": true
+        },
+        {
+          "optionCode": "_ENVIPL-SQ",
+          "elevation": null,
+          "description": "Sprucewood Standard Powder Bath 3 Fixtures",
+          "price": 0.0,
+          "priceBlank": false,
+          "unit": null,
+          "needsQuantity": false,
+          "isStandard": true
         }
       ]
     },
