@@ -75,27 +75,27 @@ const OptionRow = memo(function OptionRow({
       className={`option-row flex items-start gap-3 px-4 py-3 min-h-[52px] transition-colors ${rowBg} ${rowBorder} ${rowOpacity}`}
     >
       {/* Left: control */}
-      <div className="flex-shrink-0 mt-1 w-5 min-w-[20px]">
+      <div className="flex-shrink-0 mt-0.5 w-6 min-w-[24px]">
         {elevationMismatch ? (
-          <Circle className="w-5 h-5 text-stone-300" aria-hidden="true" />
+          <Circle className="w-6 h-6 text-stone-300" aria-hidden="true" />
         ) : isStandard ? (
-          <CheckCircle2 className="w-5 h-5 text-stone-400" aria-hidden="true" />
+          <CheckCircle2 className="w-6 h-6 text-stone-500" aria-hidden="true" />
         ) : priceBlank ? (
-          <Circle className="w-5 h-5 text-stone-300" aria-hidden="true" />
+          <Circle className="w-6 h-6 text-stone-300" aria-hidden="true" />
         ) : isRadio ? (
           <button
             type="button"
             role="radio"
             aria-checked={isSelected}
             onClick={handleToggle}
-            className="w-5 h-5 rounded-full border-2 flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-1"
+            className="w-6 h-6 rounded-full border-2 flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-1"
             style={{
-              borderColor: isSelected ? '#92400e' : '#d6d3d1',
+              borderColor: isSelected ? '#92400e' : '#a8a29e',
               backgroundColor: isSelected ? '#92400e' : 'transparent',
             }}
           >
             {isSelected && (
-              <span className="w-2 h-2 rounded-full bg-white inline-block" />
+              <span className="w-2.5 h-2.5 rounded-full bg-white inline-block" />
             )}
           </button>
         ) : (
@@ -104,15 +104,15 @@ const OptionRow = memo(function OptionRow({
             role="checkbox"
             aria-checked={isSelected}
             onClick={handleToggle}
-            className="w-5 h-5 rounded border-2 flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-1"
+            className="w-6 h-6 rounded border-2 flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-1"
             style={{
-              borderColor: isSelected ? '#92400e' : '#d6d3d1',
+              borderColor: isSelected ? '#92400e' : '#a8a29e',
               backgroundColor: isSelected ? '#92400e' : 'transparent',
             }}
           >
             {isSelected && (
               <svg
-                className="w-3 h-3 text-white"
+                className="w-3.5 h-3.5 text-white"
                 viewBox="0 0 12 12"
                 fill="none"
                 stroke="currentColor"
@@ -130,8 +130,8 @@ const OptionRow = memo(function OptionRow({
       {/* Middle: description */}
       <div className="flex-1 min-w-0">
         <div
-          className={`text-[15px] leading-snug ${
-            elevationMismatch ? 'text-stone-400' : isStandard ? 'text-stone-500' : priceBlank ? 'text-stone-400' : 'text-stone-800'
+          className={`text-base leading-snug ${
+            elevationMismatch ? 'text-stone-400' : isStandard ? 'text-stone-500' : priceBlank ? 'text-stone-500' : 'text-stone-900'
           } ${isInteractive ? 'cursor-pointer' : ''}`}
           onClick={isInteractive ? handleToggle : undefined}
         >
@@ -151,17 +151,17 @@ const OptionRow = memo(function OptionRow({
         </div>
 
         {/* Badges row */}
-        <div className="flex flex-wrap items-center gap-1 mt-1">
-          <span className="text-xs bg-stone-200 text-stone-600 rounded px-1.5 py-0.5 font-mono">
+        <div className="flex flex-wrap items-center gap-1.5 mt-1">
+          <span className="text-sm bg-stone-200 text-stone-700 rounded px-2 py-0.5 font-mono">
             {optionCode}
           </span>
           {elevation && (
-            <span className="text-xs bg-blue-100 text-blue-700 rounded px-1.5 py-0.5">
+            <span className="text-sm bg-blue-100 text-blue-800 rounded px-2 py-0.5 font-medium">
               Elev {elevation}
             </span>
           )}
           {unit && (
-            <span className="text-xs bg-amber-100 text-amber-700 rounded px-1.5 py-0.5">
+            <span className="text-sm bg-amber-100 text-amber-800 rounded px-2 py-0.5 font-medium">
               {unitBadgeLabel(unit)}
             </span>
           )}
@@ -176,16 +176,16 @@ const OptionRow = memo(function OptionRow({
               value={quantity}
               onChange={handleQtyChange}
               onClick={(e) => e.stopPropagation()}
-              className="border border-stone-300 rounded px-2 py-1 text-center w-20 text-[15px] focus:outline-none focus:ring-2 focus:ring-amber-500"
+              className="border border-stone-400 rounded px-2 py-1.5 text-center w-24 text-base focus:outline-none focus:ring-2 focus:ring-amber-500"
               aria-label={`${unitInputLabel(unit)} for ${description}`}
             />
             {unit && (
-              <span className="text-sm text-stone-500">{unitInputLabel(unit)}</span>
+              <span className="text-base text-stone-600">{unitInputLabel(unit)}</span>
             )}
-            <span className="text-sm text-stone-500">
+            <span className="text-base text-stone-600">
               × {formatCurrency(price)}
             </span>
-            <span className="text-sm font-semibold text-stone-800">
+            <span className="text-base font-bold text-stone-900">
               = {formatCurrency(lineTotal)}
             </span>
           </div>
@@ -195,27 +195,27 @@ const OptionRow = memo(function OptionRow({
       {/* Right: price */}
       <div className="flex-shrink-0 text-right min-w-[140px]">
         {elevationMismatch ? (
-          <span className="inline-block bg-stone-200 text-stone-500 text-xs px-2 py-1 rounded italic leading-tight">
+          <span className="inline-block bg-stone-200 text-stone-600 text-sm px-2 py-1 rounded italic leading-tight">
             Not available for<br />this elevation
           </span>
         ) : isStandard ? (
-          <span className="inline-block bg-stone-200 text-stone-600 text-xs px-2 py-0.5 rounded font-medium">
+          <span className="inline-block bg-stone-200 text-stone-700 text-sm px-2.5 py-1 rounded font-semibold">
             ✓ Included
           </span>
         ) : priceBlank ? (
-          <span className="text-stone-400 italic text-sm">Price TBD</span>
+          <span className="text-stone-500 italic text-base font-medium">Price TBD</span>
         ) : isFree ? (
-          <span className="text-[15px] font-semibold text-stone-500">No Charge</span>
+          <span className="text-base font-semibold text-stone-600">No Charge</span>
         ) : isCredit ? (
-          <span className="text-[15px] font-semibold text-green-700">
+          <span className="text-base font-bold text-green-700">
             Credit: −{formatCurrency(Math.abs(price))}
           </span>
         ) : needsQuantity && isSelected ? (
-          <span className="text-[15px] font-semibold text-stone-900">
+          <span className="text-base font-bold text-stone-900">
             {formatCurrency(price)}
           </span>
         ) : (
-          <span className="text-[15px] font-semibold text-stone-900">
+          <span className="text-base font-bold text-stone-900">
             {formatCurrency(price)}
           </span>
         )}

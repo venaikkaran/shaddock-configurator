@@ -70,14 +70,14 @@ export default function RoomSidebar() {
               <div className="flex items-center gap-2 w-full">
                 <span
                   className={[
-                    'flex-1 text-sm font-medium truncate leading-snug',
-                    isActive ? 'text-brand-700' : 'text-warm-800',
+                    'flex-1 text-[15px] font-semibold truncate leading-snug',
+                    isActive ? 'text-brand-700' : 'text-stone-800',
                   ].join(' ')}
                   title={section.name}
                 >
                   {section.name}
                 </span>
-                <span className="text-xs text-warm-500 flex-shrink-0">
+                <span className="text-sm text-stone-500 flex-shrink-0">
                   ({stats.totalItems})
                 </span>
                 {stats.selectedCount > 0 && (
@@ -90,13 +90,13 @@ export default function RoomSidebar() {
                 )}
               </div>
               {section.description && (
-                <span className="text-xs text-warm-400 truncate leading-tight pl-0">
+                <span className="text-sm text-stone-500 truncate leading-tight pl-0">
                   {section.description}
                 </span>
               )}
               {stats.totalSpend > 0 && (
                 <div className="pl-0 flex justify-end w-full">
-                  <span className="text-xs text-warm-500 tabular-nums">
+                  <span className="text-sm font-medium text-stone-600 tabular-nums">
                     {formatCompact(stats.totalSpend)}
                   </span>
                 </div>

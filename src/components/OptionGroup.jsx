@@ -108,10 +108,10 @@ export default function OptionGroup({
   return (
     <div className="bg-warm-50/50 border border-warm-200 rounded-xl p-1 mb-3">
       {/* Group header */}
-      <div className="text-sm font-semibold text-warm-700 px-3 py-2 border-b border-warm-200 mb-1 flex items-center justify-between">
+      <div className="text-base font-bold text-stone-700 px-3 py-2.5 border-b border-warm-200 mb-1 flex items-center justify-between">
         <span>{groupLabel}</span>
         {groupNeedsQuantity && unitLabel && (
-          <span className="text-xs font-normal text-warm-500 bg-warm-100 rounded px-2 py-0.5">
+          <span className="text-sm font-medium text-stone-600 bg-warm-100 rounded px-2 py-0.5">
             {unitBadgeLabel(unitLabel)}
           </span>
         )}
@@ -156,13 +156,13 @@ export default function OptionGroup({
             handleNoneClick();
           }
         }}
-        className="px-4 py-2 text-sm text-warm-500 cursor-pointer hover:bg-warm-100 rounded flex items-center gap-2"
+        className="px-4 py-2.5 text-base text-stone-600 cursor-pointer hover:bg-warm-100 rounded flex items-center gap-2.5 min-h-[44px]"
       >
         <Circle
-          size={16}
-          className={anySelected ? 'text-warm-400' : 'text-blue-500 fill-blue-500'}
+          size={20}
+          className={anySelected ? 'text-stone-400' : 'text-blue-600 fill-blue-600'}
         />
-        <span>None</span>
+        <span className="font-medium">None (no selection)</span>
       </div>
 
       {/* Option rows — hide individual qty inputs since we have shared one */}
