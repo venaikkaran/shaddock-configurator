@@ -7,9 +7,11 @@ import WizardView from './components/WizardView'
 import CompareView from './components/CompareView'
 import BudgetPanel from './components/BudgetPanel'
 import SettingsModal from './components/SettingsModal'
+import RoomView from './components/RoomView'
+import RoomSidebar from './components/RoomSidebar'
 
 function AppContent() {
-  const { loading, viewMode, totalCost, categoryCounts, data } = useApp()
+  const { loading, viewMode, browseMode, totalCost, categoryCounts, data } = useApp()
   const [settingsOpen, setSettingsOpen] = useState(false)
 
   if (loading) {
@@ -30,10 +32,14 @@ function AppContent() {
       <Header onOpenSettings={() => setSettingsOpen(true)} />
 
       <div className="flex flex-1 overflow-hidden" style={{ height: 'calc(100vh - 70px)' }}>
-        {viewMode !== 'compare' && <CategorySidebar />}
+        {viewMode !== 'compare' && (
+          browseMode === 'room' ? <RoomSidebar /> : <CategorySidebar />
+        )}
 
         <main className="flex-1 overflow-y-auto">
-          {viewMode === 'browse' && <BrowseView />}
+          {viewMode === 'browse' && (
+            browseMode === 'room' ? <RoomView /> : <BrowseView />
+          )}
           {viewMode === 'wizard' && <WizardView />}
           {viewMode === 'compare' && <CompareView />}
         </main>

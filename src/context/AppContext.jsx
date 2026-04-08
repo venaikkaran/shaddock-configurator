@@ -2,6 +2,7 @@ import { createContext, useState, useEffect, useMemo, useCallback, useContext, u
 import { debounce } from 'lodash';
 import { getSelectionKey } from '../utils/selectionKey';
 import { detectGroups, getGroupBase, isAdditiveCategory } from '../utils/groupDetection';
+import { mapItemsToRooms, filterRoomSections } from '../utils/roomMapping';
 
 const AppContext = createContext(null);
 
@@ -32,6 +33,8 @@ export function AppProvider({ children }) {
   const [activeCategory, setActiveCategory] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [viewMode, setViewMode] = useState('browse');
+  const [browseMode, setBrowseMode] = useState('room'); // 'room' | 'trade'
+  const [activeRoom, setActiveRoom] = useState(null); // room section ID for room view
   const [wizardStep, setWizardStep] = useState(0);
   const [budget, setBudget] = useState(() => loadFromLS(LS_KEYS.budget, null));
   const [yellowThreshold, setYellowThreshold] = useState(() => {
@@ -52,6 +55,11 @@ export function AppProvider({ children }) {
         setData(d);
         if (!activeCategory && d.categories.length > 0) {
           setActiveCategory(d.categories[0].code);
+        }
+        // Set default room for room view
+        const rooms = mapItemsToRooms(d.categories);
+        if (rooms.length > 0) {
+          setActiveRoom(rooms[0].id);
         }
         setLoading(false);
       });
@@ -222,6 +230,17 @@ export function AppProvider({ children }) {
     });
   }, [data, elevation, searchQuery]);
 
+  // Room-based sections (computed from raw data)
+  const roomSectionsRaw = useMemo(() => {
+    if (!data) return [];
+    return mapItemsToRooms(data.categories);
+  }, [data]);
+
+  // Filtered room sections (elevation + search applied)
+  const roomSections = useMemo(() => {
+    return filterRoomSections(roomSectionsRaw, elevation, searchQuery);
+  }, [roomSectionsRaw, elevation, searchQuery]);
+
   // Save config
   const saveConfig = useCallback((name) => {
     const config = {
@@ -312,6 +331,11 @@ export function AppProvider({ children }) {
     categoryCounts,
     budgetStatus,
     filteredCategories,
+    browseMode,
+    setBrowseMode,
+    activeRoom,
+    setActiveRoom,
+    roomSections,
     saveConfig,
     loadConfig,
     deleteConfig,

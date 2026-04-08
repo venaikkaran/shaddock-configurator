@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
-import { Search, X, LayoutGrid, Compass, GitCompare, Settings } from 'lucide-react';
+import { Search, X, LayoutGrid, Compass, GitCompare, Settings, Home, List } from 'lucide-react';
 import { debounce } from 'lodash';
 import { useApp } from '../context/AppContext';
 
@@ -16,6 +16,8 @@ export default function Header({ onOpenSettings }) {
     selections,
     itemMap,
     clearAllSelections,
+    browseMode,
+    setBrowseMode,
   } = useApp();
 
   const [localSearch, setLocalSearch] = useState(searchQuery);
@@ -167,6 +169,47 @@ export default function Header({ onOpenSettings }) {
 
         {/* Spacer */}
         <div className="flex-1 hidden lg:block" />
+
+        {/* Browse Mode Toggle: Room vs Trade */}
+        {viewMode === 'browse' && (
+          <div
+            className="flex items-center gap-1 bg-warm-50 border border-warm-200 rounded-lg p-1 flex-shrink-0"
+            role="group"
+            aria-label="Browse mode"
+          >
+            <button
+              type="button"
+              onClick={() => setBrowseMode('room')}
+              className={`flex items-center gap-1.5 px-3 h-9 rounded-md text-sm font-medium transition-all ${
+                browseMode === 'room'
+                  ? 'bg-white text-brand-700 shadow-sm border border-warm-200'
+                  : 'text-warm-500 hover:text-warm-800 hover:bg-warm-100'
+              }`}
+              style={{ fontFamily: "'DM Sans', sans-serif" }}
+              aria-pressed={browseMode === 'room'}
+            >
+              <Home size={15} aria-hidden="true" />
+              <span className="hidden sm:inline">By Room</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => setBrowseMode('trade')}
+              className={`flex items-center gap-1.5 px-3 h-9 rounded-md text-sm font-medium transition-all ${
+                browseMode === 'trade'
+                  ? 'bg-white text-brand-700 shadow-sm border border-warm-200'
+                  : 'text-warm-500 hover:text-warm-800 hover:bg-warm-100'
+              }`}
+              style={{ fontFamily: "'DM Sans', sans-serif" }}
+              aria-pressed={browseMode === 'trade'}
+            >
+              <List size={15} aria-hidden="true" />
+              <span className="hidden sm:inline">By Trade</span>
+            </button>
+          </div>
+        )}
+
+        {/* Divider */}
+        <div className="hidden md:block h-8 w-px bg-warm-200 flex-shrink-0" />
 
         {/* View Mode Toggle */}
         <div
