@@ -10,6 +10,7 @@ export default function RoomSidebar() {
     activeRoom,
     setActiveRoom,
     selections,
+    customOptions,
     searchQuery,
   } = useApp();
 
@@ -18,7 +19,7 @@ export default function RoomSidebar() {
   // Build a Set of room IDs that have search matches (from filtered list)
   const filteredRoomIds = useMemo(() => {
     if (!roomSections) return new Set();
-    return new Set(roomSections.filter(s => s.items && s.items.length > 0).map(s => s.id));
+    return new Set(roomSections.filter(s => s.subgroups && s.subgroups.some(sg => sg.items.length > 0)).map(s => s.id));
   }, [roomSections]);
 
   // Pre-compute stats for every room section (using raw/unfiltered sections)
@@ -26,10 +27,10 @@ export default function RoomSidebar() {
     if (!roomSectionsRaw) return {};
     const stats = {};
     for (const section of roomSectionsRaw) {
-      stats[section.id] = getRoomStats(section, selections);
+      stats[section.id] = getRoomStats(section, selections, customOptions);
     }
     return stats;
-  }, [roomSectionsRaw, selections]);
+  }, [roomSectionsRaw, selections, customOptions]);
 
   if (!roomSectionsRaw || roomSectionsRaw.length === 0) return null;
 

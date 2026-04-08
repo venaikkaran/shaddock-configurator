@@ -55,7 +55,7 @@ function WizardCategoryContent({ category, groups, selections, onToggle, onQuant
   const hasMore = renderList.length > visibleCount;
 
   if (category.code === 'CU') {
-    return <CustomOptions category={category} selections={selections} />;
+    return <CustomOptions items={category.items} />;
   }
 
   return (
