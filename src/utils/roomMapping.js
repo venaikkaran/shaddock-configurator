@@ -8,7 +8,7 @@
  * Output: Array of room sections, each containing sub-groups by trade category.
  */
 
-import { getSelectionKey } from './selectionKey';
+import { getSelectionKey } from './selectionKey.js';
 
 // ── Room Definitions ──────────────────────────────────────────────────────
 

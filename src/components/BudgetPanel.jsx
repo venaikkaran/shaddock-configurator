@@ -388,16 +388,16 @@ export default function BudgetPanel() {
                         <button
                           onClick={() => handleStartRename(config)}
                           title="Rename"
-                          className="p-1.5 text-stone-400 hover:text-stone-700 hover:bg-stone-100 rounded transition-colors"
+                          className="w-10 h-10 flex items-center justify-center text-stone-400 hover:text-stone-700 hover:bg-stone-100 rounded transition-colors"
                         >
-                          <Edit3 size={13} />
+                          <Edit3 size={15} />
                         </button>
                         <button
                           onClick={() => handleDeleteConfig(config)}
                           title="Delete"
-                          className="p-1.5 text-stone-400 hover:text-red-600 hover:bg-red-50 rounded transition-colors"
+                          className="w-10 h-10 flex items-center justify-center text-stone-400 hover:text-red-600 hover:bg-red-50 rounded transition-colors"
                         >
-                          <Trash2 size={13} />
+                          <Trash2 size={15} />
                         </button>
                       </div>
                     </div>

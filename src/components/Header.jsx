@@ -190,7 +190,7 @@ export default function Header({ onOpenSettings }) {
             <button
               type="button"
               onClick={() => setBrowseMode('room')}
-              className={`flex items-center gap-1.5 px-3 h-9 rounded-md text-sm font-medium transition-all ${
+              className={`flex items-center gap-1.5 px-3 h-11 rounded-md text-sm font-medium transition-all ${
                 browseMode === 'room'
                   ? 'bg-white text-brand-700 shadow-sm border border-warm-200'
                   : 'text-warm-500 hover:text-warm-800 hover:bg-warm-100'
@@ -204,7 +204,7 @@ export default function Header({ onOpenSettings }) {
             <button
               type="button"
               onClick={() => setBrowseMode('trade')}
-              className={`flex items-center gap-1.5 px-3 h-9 rounded-md text-sm font-medium transition-all ${
+              className={`flex items-center gap-1.5 px-3 h-11 rounded-md text-sm font-medium transition-all ${
                 browseMode === 'trade'
                   ? 'bg-white text-brand-700 shadow-sm border border-warm-200'
                   : 'text-warm-500 hover:text-warm-800 hover:bg-warm-100'
@@ -235,7 +235,7 @@ export default function Header({ onOpenSettings }) {
                 type="button"
                 onClick={() => setViewMode(id)}
                 className={`
-                  flex items-center gap-1.5 px-3 h-9 rounded-md text-sm font-medium transition-all
+                  flex items-center gap-1.5 px-3 h-11 rounded-md text-sm font-medium transition-all
                   ${isActive
                     ? 'bg-white text-brand-700 shadow-sm border border-warm-200'
                     : 'text-warm-500 hover:text-warm-800 hover:bg-warm-100'
