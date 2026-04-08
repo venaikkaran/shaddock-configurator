@@ -10,6 +10,8 @@ export default function CategorySidebar() {
     categoryTotals,
     filteredCategories,
     searchQuery,
+    viewMode,
+    setWizardStep,
   } = useApp();
 
   if (!data?.categories) return null;
@@ -40,7 +42,13 @@ export default function CategorySidebar() {
           return (
             <button
               key={cat.code}
-              onClick={() => setActiveCategory(cat.code)}
+              onClick={() => {
+                setActiveCategory(cat.code);
+                if (viewMode === 'wizard') {
+                  const stepIndex = filteredCategories.findIndex(c => c.code === cat.code);
+                  if (stepIndex !== -1) setWizardStep(stepIndex);
+                }
+              }}
               className={[
                 'w-full text-left min-h-[48px] px-3 py-2 flex flex-col justify-center gap-0.5 transition-all duration-150 cursor-pointer',
                 isActive

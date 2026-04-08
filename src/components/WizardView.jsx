@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, SkipForward } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { getSelectionKey } from '../utils/selectionKey';
@@ -116,10 +116,18 @@ export default function WizardView() {
     categoryCounts,
     categoryTotals,
     setViewMode,
+    setActiveCategory,
   } = useApp();
 
   const totalSteps = filteredCategories.length;
   const currentCategory = filteredCategories[wizardStep] || null;
+
+  // Sync sidebar active category with wizard step
+  useEffect(() => {
+    if (currentCategory) {
+      setActiveCategory(currentCategory.code);
+    }
+  }, [wizardStep, currentCategory, setActiveCategory]);
 
   const isFirstStep = wizardStep === 0;
   const isLastStep = wizardStep === totalSteps - 1;
@@ -160,9 +168,9 @@ export default function WizardView() {
   }
 
   return (
-    <div className="flex-1 overflow-y-auto flex flex-col">
-      {/* Progress section — sticky top */}
-      <div className="px-6 py-4 bg-white border-b border-warm-200 sticky top-0 z-10">
+    <div className="flex-1 flex flex-col min-h-0">
+      {/* Progress section — fixed top */}
+      <div className="px-6 py-4 bg-white border-b border-warm-200 flex-shrink-0 z-10">
         <div className="flex items-center justify-between mb-2">
           <p className="text-lg font-display text-stone-700">
             Step {wizardStep + 1} of {totalSteps} &mdash; {currentCategory.name}
@@ -196,8 +204,8 @@ export default function WizardView() {
         </div>
       </div>
 
-      {/* Main content area */}
-      <div className="px-6 py-4 flex-1">
+      {/* Main content area — scrollable */}
+      <div className="px-6 py-4 flex-1 overflow-y-auto min-h-0">
         <WizardCategoryContent
           category={currentCategory}
           groups={groups}
@@ -207,8 +215,8 @@ export default function WizardView() {
         />
       </div>
 
-      {/* Navigation buttons — sticky bottom */}
-      <div className="flex justify-between items-center px-6 py-4 bg-white border-t border-warm-200 sticky bottom-0">
+      {/* Navigation buttons — always visible at bottom */}
+      <div className="flex justify-between items-center px-6 py-4 bg-white border-t border-warm-200 flex-shrink-0">
         <button
           onClick={handleBack}
           disabled={isFirstStep}

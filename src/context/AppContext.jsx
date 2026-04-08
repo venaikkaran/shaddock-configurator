@@ -222,9 +222,10 @@ export function AppProvider({ children }) {
     for (const [key, sel] of Object.entries(selections)) {
       if (!sel.selected) continue;
       const item = itemMap[key];
-      if (item) {
-        counts[item.categoryCode] = (counts[item.categoryCode] || 0) + 1;
-      }
+      if (!item) continue;
+      // needsQuantity items with qty=0 don't count as selected
+      if (item.needsQuantity && (!sel.quantity || sel.quantity <= 0)) continue;
+      counts[item.categoryCode] = (counts[item.categoryCode] || 0) + 1;
     }
     for (const [, custom] of Object.entries(customOptions)) {
       if (custom.selected) {
@@ -238,9 +239,9 @@ export function AppProvider({ children }) {
   const budgetStatus = useMemo(() => {
     if (budget == null || budget <= 0) return 'none';
     if (totalCost <= budget) return 'under';
-    if (totalCost <= budget * (1 + redThreshold)) return 'yellow';
+    if (totalCost <= budget * (1 + yellowThreshold)) return 'yellow';
     return 'red';
-  }, [totalCost, budget, redThreshold]);
+  }, [totalCost, budget, yellowThreshold]);
 
   // Filtered categories based on elevation + search
   // Elevation-mismatched items are kept but flagged (not removed)
