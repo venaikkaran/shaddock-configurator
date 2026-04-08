@@ -2,21 +2,21 @@ const UNIT_LABELS = {
   'per SF': 'per Square Foot (SF)',
   'per LFT': 'per Linear Foot (LFT)',
   'each': 'each',
-  'per $': 'per Dollar Amount ($)',
+  'per $': 'Enter Total Dollar Amount',
 };
 
 const UNIT_SHORT_LABELS = {
   'per SF': 'SF (Sq. Ft.)',
   'per LFT': 'LFT (Linear Ft.)',
   'each': 'each',
-  'per $': '$ Amount',
+  'per $': 'Enter $ Amount',
 };
 
 const UNIT_INPUT_LABELS = {
   'per SF': 'Square Feet',
   'per LFT': 'Linear Feet',
   'each': 'Quantity',
-  'per $': 'Dollar Amount',
+  'per $': 'Enter Total Dollar Amount',
 };
 
 /** Full label for badges: "per SF (Square Foot)" */

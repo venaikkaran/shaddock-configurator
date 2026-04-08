@@ -1,7 +1,7 @@
 import { createContext, useState, useEffect, useMemo, useCallback, useContext, useRef } from 'react';
 import { debounce } from 'lodash';
 import { getSelectionKey } from '../utils/selectionKey';
-import { detectGroups, getGroupBase, isAdditiveCategory } from '../utils/groupDetection';
+import { detectGroups, getGroupBase, isAdditiveCategory, CROSS_GROUP_EXCLUSIONS } from '../utils/groupDetection';
 import { mapItemsToRooms, filterRoomSections } from '../utils/roomMapping';
 
 const AppContext = createContext(null);
@@ -135,10 +135,38 @@ export function AppProvider({ children }) {
         }
       }
 
+      // Cross-group mutual exclusions: deselect items from competing groups
+      const itemBase = getGroupBase(item.optionCode);
+      for (const exclusion of CROSS_GROUP_EXCLUSIONS) {
+        if (exclusion.categoryCode !== categoryCode) continue;
+        // Find which exclusion group this item belongs to
+        const myGroup = exclusion.groups.find(g => g.bases.includes(itemBase));
+        if (!myGroup) continue;
+        // Deselect items from all OTHER competing groups
+        for (const otherGroup of exclusion.groups) {
+          if (otherGroup === myGroup) continue;
+          for (const otherBase of otherGroup.bases) {
+            const catGroups = groups[categoryCode];
+            if (catGroups && catGroups[otherBase]) {
+              for (const otherItem of catGroups[otherBase]) {
+                delete next[getSelectionKey(otherItem)];
+              }
+            }
+            // Also remove standalone items with this base (not in detected groups)
+            for (const [selKey] of Object.entries(next)) {
+              const mapped = itemMap[selKey];
+              if (mapped && mapped.categoryCode === categoryCode && getGroupBase(mapped.optionCode) === otherBase) {
+                delete next[selKey];
+              }
+            }
+          }
+        }
+      }
+
       next[key] = { selected: true, quantity: item.needsQuantity ? 0 : 1 };
       return next;
     });
-  }, [groups]);
+  }, [groups, itemMap]);
 
   // Update quantity
   const updateQuantity = useCallback((item, quantity) => {

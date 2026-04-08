@@ -228,9 +228,9 @@ const ROOM_DEFS = [
       /\bgutter/i,
       /\binsulation/i,
       /\bencapsulation/i,
-      /\bobscure\s*glass/i,
-      /\brain\s*glass/i,
-      /\bwindow\s*(?:upgrade|glass|obscure|rain)/i,
+      /\bwindow.*obscure\s*glass/i,
+      /\bwindow.*rain\s*glass/i,
+      /\bwindow\s*(?:upgrade|glass)/i,
     ],
   },
   {

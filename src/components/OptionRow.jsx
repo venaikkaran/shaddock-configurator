@@ -32,6 +32,7 @@ const OptionRow = memo(function OptionRow({
 
   const isInteractive = !isStandard && !priceBlank && !elevationMismatch;
   const isFree = !isStandard && !priceBlank && !elevationMismatch && price === 0;
+  const isCredit = !isStandard && !priceBlank && price != null && price < 0;
   const showQtyInput = needsQuantity && isSelected && !hideQuantityInput && !elevationMismatch;
   const lineTotal = needsQuantity && isSelected ? price * (quantity || 0) : null;
 
@@ -205,6 +206,10 @@ const OptionRow = memo(function OptionRow({
           <span className="text-stone-400 italic text-sm">Price TBD</span>
         ) : isFree ? (
           <span className="text-[15px] font-semibold text-stone-500">No Charge</span>
+        ) : isCredit ? (
+          <span className="text-[15px] font-semibold text-green-700">
+            Credit: −{formatCurrency(Math.abs(price))}
+          </span>
         ) : needsQuantity && isSelected ? (
           <span className="text-[15px] font-semibold text-stone-900">
             {formatCurrency(price)}
