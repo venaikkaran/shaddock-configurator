@@ -192,7 +192,6 @@ function RoomSection({
   onQuantityChange,
   onClearRoom,
   elevation,
-  allRoomSections,
 }) {
   const hasSelections = useMemo(() => {
     for (const subgroup of room.subgroups) {
@@ -206,13 +205,13 @@ function RoomSection({
 
   // Detect flooring conflicts within this room
   const flooringConflicts = useMemo(() => {
-    return detectFlooringConflicts(room, selections);
+    return detectFlooringConflicts(selections, room.subgroups);
   }, [room, selections]);
 
   // Get cross-references for this room
   const crossRefs = useMemo(() => {
-    return getCrossReferences(room, allRoomSections);
-  }, [room, allRoomSections]);
+    return getCrossReferences(room.id);
+  }, [room.id]);
 
   // Check if this room has custom options
   const customSubgroup = room.subgroups.find(sg => sg.categoryCode === 'CU');
@@ -239,16 +238,12 @@ function RoomSection({
       </div>
 
       {/* Flooring conflict warning */}
-      {flooringConflicts && flooringConflicts.length > 0 && (
+      {flooringConflicts && (
         <div className="flex items-start gap-3 p-3 mb-4 bg-amber-50 border border-amber-200 rounded-lg">
           <AlertTriangle className="w-5 h-5 text-amber-600 mt-0.5 flex-shrink-0" />
           <div>
             <p className="text-sm font-semibold text-amber-800">Flooring Conflict</p>
-            <p className="text-sm text-amber-700 mt-0.5">
-              Multiple flooring types selected in this room:{' '}
-              {flooringConflicts.map(c => c.description).join(', ')}.
-              Consider keeping only one flooring type per room.
-            </p>
+            <p className="text-sm text-amber-700 mt-0.5">{flooringConflicts}</p>
           </div>
         </div>
       )}
@@ -286,11 +281,11 @@ function RoomSection({
           <div>
             <p className="text-sm font-semibold text-blue-700">See also</p>
             <ul className="mt-1">
-              {crossRefs.map(ref => (
-                <li key={ref.roomId} className="text-sm text-blue-700 flex items-center gap-1">
+              {crossRefs.map((ref, i) => (
+                <li key={`${ref.targetRoom}-${i}`} className="text-sm text-blue-700 flex items-center gap-1">
                   <ChevronRight className="w-3.5 h-3.5" />
-                  <span>{ref.roomName}</span>
-                  {ref.note && <span className="text-blue-500">— {ref.note}</span>}
+                  <span>{ref.label}</span>
+                  {ref.detail && <span className="text-blue-500">— {ref.detail}</span>}
                 </li>
               ))}
             </ul>
@@ -380,7 +375,6 @@ export default function RoomView() {
           onQuantityChange={updateQuantity}
           onClearRoom={handleClearRoom}
           elevation={elevation}
-          allRoomSections={roomSections}
         />
       ))}
     </div>
