@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useState, useEffect } from 'react';
 import { Circle } from 'lucide-react';
 import { getSelectionKey } from '../utils/selectionKey';
 import { formatCurrency } from '../utils/formatCurrency';
@@ -63,7 +63,13 @@ export default function OptionGroup({
     return 0;
   });
 
-  // Sync from selections if changed externally
+  // Sync sharedQty when selections change externally (e.g., loading a config)
+  useEffect(() => {
+    if (selectedInfo && selectedInfo.quantity > 0 && selectedInfo.quantity !== sharedQty) {
+      setSharedQty(selectedInfo.quantity);
+    }
+  }, [selectedInfo?.quantity]);
+
   const effectiveQty = sharedQty;
 
   function handleNoneClick() {

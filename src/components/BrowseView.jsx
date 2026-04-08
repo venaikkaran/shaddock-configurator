@@ -20,7 +20,7 @@ function CategorySection({ category, groups, selections, onToggle, onQuantityCha
   const itemFlagLookup = useMemo(() => {
     const lookup = {};
     for (const item of category.items) {
-      const key = item.optionCode + (item.elevation ? '_' + item.elevation : '');
+      const key = getSelectionKey(item);
       if (item.elevationMismatch) lookup[key] = true;
     }
     return lookup;
@@ -29,7 +29,7 @@ function CategorySection({ category, groups, selections, onToggle, onQuantityCha
   // Augment group items with elevationMismatch flag from filtered data
   function flagGroupItems(items) {
     return items.map(item => {
-      const key = item.optionCode + (item.elevation ? '_' + item.elevation : '');
+      const key = getSelectionKey(item);
       return itemFlagLookup[key] ? { ...item, elevationMismatch: true } : item;
     });
   }
@@ -48,7 +48,7 @@ function CategorySection({ category, groups, selections, onToggle, onQuantityCha
     const codes = new Set();
     for (const [, items] of Object.entries(categoryGroups)) {
       for (const item of items) {
-        codes.add(item.optionCode + (item.elevation ? '_' + item.elevation : ''));
+        codes.add(getSelectionKey(item));
       }
     }
     return codes;
@@ -74,7 +74,7 @@ function CategorySection({ category, groups, selections, onToggle, onQuantityCha
     for (const item of category.items) {
       if (item.isStandard || item.priceBlank) continue;
       if (addedAreaGroups.has(item.optionCode)) continue;
-      const itemUniqueKey = item.optionCode + (item.elevation ? '_' + item.elevation : '');
+      const itemUniqueKey = getSelectionKey(item);
       if (groupedItemCodes.has(itemUniqueKey)) {
         const base = getGroupBase(item.optionCode);
         if (base && categoryGroups[base] && !addedBases.has(base)) {
@@ -86,7 +86,7 @@ function CategorySection({ category, groups, selections, onToggle, onQuantityCha
 
     // Third: standalone items (not in any group)
     for (const item of category.items) {
-      const itemUniqueKey = item.optionCode + (item.elevation ? '_' + item.elevation : '');
+      const itemUniqueKey = getSelectionKey(item);
       if (!groupedItemCodes.has(itemUniqueKey) && !areaGroupedCodes.has(item.optionCode)) {
         list.push({ type: 'item', item });
       }

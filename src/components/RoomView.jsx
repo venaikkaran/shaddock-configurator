@@ -32,7 +32,7 @@ function SubgroupSection({
   const subgroupItemKeys = useMemo(() => {
     const keys = new Set();
     for (const item of items) {
-      keys.add(item.optionCode + (item.elevation ? '_' + item.elevation : ''));
+      keys.add(getSelectionKey(item));
     }
     return keys;
   }, [items]);
@@ -42,7 +42,7 @@ function SubgroupSection({
     const filtered = {};
     for (const [base, groupItems] of Object.entries(fullGroups)) {
       const roomItems = groupItems.filter(item => {
-        const key = item.optionCode + (item.elevation ? '_' + item.elevation : '');
+        const key = getSelectionKey(item);
         return subgroupItemKeys.has(key);
       });
       if (roomItems.length >= 2) {
@@ -106,7 +106,7 @@ function SubgroupSection({
     for (const item of items) {
       if (item.isStandard || item.priceBlank) continue;
       if (addedAreaGroups.has(item.optionCode)) continue;
-      const itemUniqueKey = item.optionCode + (item.elevation ? '_' + item.elevation : '');
+      const itemUniqueKey = getSelectionKey(item);
       if (groupedItemCodes.has(itemUniqueKey)) {
         const base = getGroupBase(item.optionCode);
         if (base && categoryGroups[base] && !addedBases.has(base)) {
@@ -118,7 +118,7 @@ function SubgroupSection({
 
     // Third: standalone items
     for (const item of items) {
-      const itemUniqueKey = item.optionCode + (item.elevation ? '_' + item.elevation : '');
+      const itemUniqueKey = getSelectionKey(item);
       if (!groupedItemCodes.has(itemUniqueKey) && !areaGroupedCodes.has(item.optionCode)) {
         list.push({ type: 'item', item });
       }
@@ -378,7 +378,7 @@ export default function RoomView() {
     for (const sg of room.subgroups) {
       if (sg.categoryCode === 'CU') continue; // Custom options handled separately
       for (const item of sg.items) {
-        roomItemKeys.add(item.optionCode + (item.elevation ? '_' + item.elevation : ''));
+        roomItemKeys.add(getSelectionKey(item));
       }
     }
     // Remove only those selections

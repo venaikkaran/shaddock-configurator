@@ -64,13 +64,20 @@ export function AppProvider({ children }) {
           setActiveRoom(prev => prev ?? rooms[0].id);
         }
         setLoading(false);
+      })
+      .catch(() => {
+        setLoading(false);
       });
   }, []);
 
   // Debounced localStorage persistence
   const debouncedSave = useRef(
     debounce((key, value) => {
-      localStorage.setItem(key, JSON.stringify(value));
+      try {
+        localStorage.setItem(key, JSON.stringify(value));
+      } catch (e) {
+        // localStorage quota exceeded or unavailable — silently ignore
+      }
     }, 500)
   ).current;
 

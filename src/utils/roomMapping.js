@@ -61,6 +61,8 @@ const ROOM_DEFS = [
       /\bgarbage\s*disposal/i,
       /\bpot\s*filler/i,
       /\bcasual\s*dining/i,
+      /\bapron[\s-]*front/i, // Farmhouse apron-front sinks are kitchen items
+      /\bfarmhouse\b/i,      // Farmhouse sinks → kitchen
     ],
   },
   {
@@ -181,6 +183,8 @@ const ROOM_DEFS = [
       /\bunder\s*stairs/i,
       /\bextended\s*entry/i,
     ],
+    // "Family Foyer" goes to laundry-mudroom, not entry-stairs
+    excludePatterns: [/\bfamily\s*foyer/i],
   },
   {
     id: 'study-office',

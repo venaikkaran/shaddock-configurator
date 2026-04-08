@@ -39,10 +39,11 @@ export default function SettingsModal({ isOpen, onClose }) {
         <h2 className="text-xl font-display text-stone-800 mb-4">Budget Settings</h2>
 
         <div className="mb-4">
-          <label className="block text-sm font-medium text-stone-700 mb-1">
+          <label htmlFor="settings-yellow-threshold" className="block text-sm font-medium text-stone-700 mb-1">
             Warning threshold (%)
           </label>
           <input
+            id="settings-yellow-threshold"
             type="number"
             min="0"
             step="0.5"
@@ -56,10 +57,11 @@ export default function SettingsModal({ isOpen, onClose }) {
         </div>
 
         <div className="mb-2">
-          <label className="block text-sm font-medium text-stone-700 mb-1">
+          <label htmlFor="settings-red-threshold" className="block text-sm font-medium text-stone-700 mb-1">
             Over budget threshold (%)
           </label>
           <input
+            id="settings-red-threshold"
             type="number"
             min="0"
             step="0.5"

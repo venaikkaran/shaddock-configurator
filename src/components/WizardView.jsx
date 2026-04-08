@@ -19,7 +19,7 @@ function WizardCategoryContent({ category, groups, selections, onToggle, onQuant
     const keys = new Set();
     for (const items of Object.values(categoryGroups)) {
       for (const item of items) {
-        keys.add(item.optionCode + (item.elevation ? '_' + item.elevation : ''));
+        keys.add(getSelectionKey(item));
       }
     }
     return keys;
@@ -31,7 +31,7 @@ function WizardCategoryContent({ category, groups, selections, onToggle, onQuant
 
     for (const item of category.items) {
       if (item.isStandard || item.priceBlank) continue;
-      const itemUniqueKey = item.optionCode + (item.elevation ? '_' + item.elevation : '');
+      const itemUniqueKey = getSelectionKey(item);
       if (groupedItemKeys.has(itemUniqueKey)) {
         const base = getGroupBase(item.optionCode);
         if (base && categoryGroups[base] && !addedBases.has(base)) {
@@ -42,7 +42,7 @@ function WizardCategoryContent({ category, groups, selections, onToggle, onQuant
     }
 
     for (const item of category.items) {
-      const itemUniqueKey = item.optionCode + (item.elevation ? '_' + item.elevation : '');
+      const itemUniqueKey = getSelectionKey(item);
       if (!groupedItemKeys.has(itemUniqueKey)) {
         list.push({ type: 'item', item });
       }
