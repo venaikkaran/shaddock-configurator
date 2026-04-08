@@ -9,12 +9,24 @@ import BudgetPanel from './components/BudgetPanel'
 import SettingsModal from './components/SettingsModal'
 import RoomView from './components/RoomView'
 import RoomSidebar from './components/RoomSidebar'
+import GuidedTutorial, { HelpButton } from './components/GuidedTutorial'
 
 function AppContent() {
   const { loading, viewMode, browseMode, totalCost, categoryCounts, data } = useApp()
   const [settingsOpen, setSettingsOpen] = useState(false)
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [budgetOpen, setBudgetOpen] = useState(false)
+  const [tutorialOpen, setTutorialOpen] = useState(() => {
+    // Show tutorial on first visit
+    try {
+      return !localStorage.getItem('shaddock_tutorial_seen')
+    } catch { return true }
+  })
+
+  function closeTutorial() {
+    setTutorialOpen(false)
+    try { localStorage.setItem('shaddock_tutorial_seen', 'true') } catch {}
+  }
 
   // Close drawers when viewport crosses the xl breakpoint (1280px)
   useEffect(() => {
@@ -107,7 +119,7 @@ function AppContent() {
           </>
         )}
 
-        <main className={`flex-1 min-h-0 flex flex-col ${viewMode === 'wizard' ? 'overflow-hidden' : 'overflow-y-auto'}`}>
+        <main data-tutorial="main-content" className={`flex-1 min-h-0 flex flex-col ${viewMode === 'wizard' ? 'overflow-hidden' : 'overflow-y-auto'}`}>
           {viewMode === 'browse' && (
             browseMode === 'room' ? <RoomView /> : <BrowseView />
           )}
@@ -137,6 +149,8 @@ function AppContent() {
       </div>
 
       <SettingsModal isOpen={settingsOpen} onClose={() => setSettingsOpen(false)} />
+      <GuidedTutorial isOpen={tutorialOpen} onClose={closeTutorial} />
+      {!tutorialOpen && <HelpButton onClick={() => setTutorialOpen(true)} />}
     </div>
   )
 }

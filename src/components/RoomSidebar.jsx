@@ -36,6 +36,7 @@ export default function RoomSidebar() {
 
   return (
     <aside
+      data-tutorial="sidebar"
       className="w-64 flex-shrink-0 bg-warm-50 sidebar-scroll overflow-y-auto sticky top-0 border-r border-warm-200"
       style={{ maxHeight: 'calc(100vh - 70px)' }}
       aria-label="Room navigation"

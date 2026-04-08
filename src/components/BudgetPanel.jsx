@@ -155,7 +155,7 @@ export default function BudgetPanel() {
   }
 
   return (
-    <aside className="w-72 flex-shrink-0 sticky top-[70px] max-h-[calc(100vh-70px)] overflow-y-auto bg-white shadow-md rounded-l-lg border-l border-stone-200">
+    <aside data-tutorial="budget-panel" className="w-72 flex-shrink-0 sticky top-[70px] max-h-[calc(100vh-70px)] overflow-y-auto bg-white shadow-md rounded-l-lg border-l border-stone-200">
       <div className="space-y-5 p-4">
 
         {/* Budget Input */}
