@@ -8,6 +8,8 @@
  * Output: Array of room sections, each containing sub-groups by trade category.
  */
 
+import { getSelectionKey } from './selectionKey';
+
 // ── Room Definitions ──────────────────────────────────────────────────────
 
 const ROOM_DEFS = [
@@ -58,44 +60,50 @@ const ROOM_DEFS = [
       /\brange\s*hood/i,
       /\bgarbage\s*disposal/i,
       /\bpot\s*filler/i,
+      /\bcasual\s*dining/i,
     ],
-    // Exclude items that mention "Casual Dining/Kitchen" — those go to kitchen too (inclusive)
   },
   {
     id: 'bath-2',
     name: 'Bath 2',
     description: 'Secondary Bathroom 2',
     patterns: [/\bbath\s*2\b/i, /\bbath\s*#2\b/i],
+    excludePatterns: [/\bpowder\s*bath/i, /\bpool\s*bath/i],
   },
   {
     id: 'bath-3',
     name: 'Bath 3',
     description: 'Secondary Bathroom 3',
     patterns: [/\bbath\s*3\b/i, /\bbath\s*#3\b/i],
+    excludePatterns: [/\bpowder\s*bath/i, /\bpool\s*bath/i],
   },
   {
     id: 'bath-4',
     name: 'Bath 4',
     description: 'Secondary Bathroom 4',
     patterns: [/\bbath\s*4\b/i, /\bbath\s*#4\b/i],
+    excludePatterns: [/\bpowder\s*bath/i, /\bpool\s*bath/i],
   },
   {
     id: 'bath-5',
     name: 'Bath 5',
     description: 'Secondary Bathroom 5',
     patterns: [/\bbath\s*5\b/i, /\bbath\s*#5\b/i],
+    excludePatterns: [/\bpowder\s*bath/i, /\bpool\s*bath/i],
   },
   {
     id: 'bath-6',
     name: 'Bath 6',
     description: 'Secondary Bathroom 6',
     patterns: [/\bbath\s*6\b/i, /\bbath\s*#6\b/i],
+    excludePatterns: [/\bpowder\s*bath/i, /\bpool\s*bath/i],
   },
   {
     id: 'bath-7',
     name: 'Bath 7',
     description: 'Secondary Bathroom 7',
     patterns: [/\bbath\s*7\b/i, /\bbath\s*#7\b/i],
+    excludePatterns: [/\bpowder\s*bath/i, /\bpool\s*bath/i],
   },
   {
     id: 'guest-bath',
@@ -134,9 +142,7 @@ const ROOM_DEFS = [
       /\bfamily\s*room/i,
       /\bliving\s*room/i,
       /\bdining\b/i,
-      /\bcasual\s*dining/i,
       /\bfamily\s*center/i,
-      /\bfamily\s*foyer/i,
     ],
   },
   {
@@ -147,9 +153,8 @@ const ROOM_DEFS = [
       /\bgame\s*room/i,
       /\bmedia\s*room/i,
       /\bgameroom/i,
-      /\bbar\b(?!\s*(?:towel|paper|soap|ring))/i, // "bar" but not "towel bar" etc.
+      /\b(?:wet\s*bar|bar\s*sink|bar\s*faucet|bar\s*\/\s*wet)/i, // only actual bar/wetbar references
       /\bwetbar\b/i,
-      /\bwet\s*bar/i,
       /\bcasita\b/i,
       /\bflex\s*room/i,
     ],
@@ -196,6 +201,7 @@ const ROOM_DEFS = [
       /\butilitly/i, // typo in data
       /\bmudroom/i,
       /\bmud\s*room/i,
+      /\bfamily\s*foyer/i,
     ],
     // Exclude "Master Mud Pan" which should go to master suite
     excludePatterns: [/\bmaster\s*mud/i],
@@ -207,9 +213,8 @@ const ROOM_DEFS = [
     wholeCats: ['MS', 'PE', 'RO', 'WD', 'IN'], // Masonry, Paint Exterior, Roofing, Windows, Insulation
     patterns: [
       /\bexterior\b/i,
-      /\bfront\s*door/i,
+      /\bfront\s*(?:door|porch|elevation|of\s*house)/i,
       /\biron\s*front/i,
-      /\bfront\b/i,
       /\bext\s*stds/i,
       /\bstucco/i,
       /\bbrick\b/i,
@@ -221,7 +226,7 @@ const ROOM_DEFS = [
       /\bencapsulation/i,
       /\bobscure\s*glass/i,
       /\brain\s*glass/i,
-      /\bwindow\b/i,
+      /\bwindow\s*(?:upgrade|glass|obscure|rain)/i,
     ],
   },
   {
@@ -255,7 +260,7 @@ const ROOM_DEFS = [
 ];
 
 // Categories that go entirely to "Whole House" (no room detection needed)
-const WHOLE_HOUSE_CATS = new Set(['DR', 'LG', '52', 'PL']);
+const WHOLE_HOUSE_CATS = new Set(['DR', 'LG', '50', '52', 'PL']);
 
 // Categories where items should be individually matched to rooms
 // (not listed as wholeCats for any room and not in WHOLE_HOUSE_CATS)
@@ -355,7 +360,7 @@ export function detectFlooringConflicts(selectedItems, roomSubgroups) {
   for (const sg of roomSubgroups) {
     if (!FLOORING_CATS.has(sg.categoryCode)) continue;
     for (const item of sg.items) {
-      const key = item.optionCode + (item.elevation ? '_' + item.elevation : '');
+      const key = getSelectionKey(item);
       if (selectedItems[key]?.selected) {
         selectedFlooring.add(sg.categoryCode);
       }
@@ -591,7 +596,7 @@ const SUB_GROUP_ORDER = {
  * Get total item count and selection stats for a room section.
  * Used by RoomSidebar.
  */
-export function getRoomStats(section, selections) {
+export function getRoomStats(section, selections, customOptions = {}) {
   let totalItems = 0;
   let selectedCount = 0;
   let totalSpend = 0;
@@ -599,7 +604,7 @@ export function getRoomStats(section, selections) {
   for (const sg of section.subgroups) {
     for (const item of sg.items) {
       totalItems++;
-      const key = item.optionCode + (item.elevation ? '_' + item.elevation : '');
+      const key = getSelectionKey(item);
       const sel = selections[key];
       if (sel?.selected) {
         selectedCount++;
@@ -607,6 +612,15 @@ export function getRoomStats(section, selections) {
           totalSpend += item.needsQuantity
             ? item.price * (sel.quantity || 0)
             : item.price;
+        }
+      }
+    }
+    // Add custom options
+    if (sg.categoryCode === 'CU') {
+      for (const [, custom] of Object.entries(customOptions)) {
+        if (custom.selected) {
+          selectedCount++;
+          if (custom.price) totalSpend += custom.price;
         }
       }
     }

@@ -122,7 +122,7 @@ function CategorySection({ category, groups, selections, onToggle, onQuantityCha
             </button>
           )}
         </div>
-        <CustomOptions category={category} selections={selections} />
+        <CustomOptions items={category.items} />
       </div>
     );
   }

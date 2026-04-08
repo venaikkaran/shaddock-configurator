@@ -6,6 +6,7 @@ import { formatCompact } from '../utils/formatCurrency';
 export default function RoomSidebar() {
   const {
     roomSections,
+    roomSectionsRaw,
     activeRoom,
     setActiveRoom,
     selections,
@@ -14,17 +15,23 @@ export default function RoomSidebar() {
 
   const isSearchActive = searchQuery && searchQuery.trim().length > 0;
 
-  // Pre-compute stats for every room section
+  // Build a Set of room IDs that have search matches (from filtered list)
+  const filteredRoomIds = useMemo(() => {
+    if (!roomSections) return new Set();
+    return new Set(roomSections.filter(s => s.items && s.items.length > 0).map(s => s.id));
+  }, [roomSections]);
+
+  // Pre-compute stats for every room section (using raw/unfiltered sections)
   const roomStats = useMemo(() => {
-    if (!roomSections) return {};
+    if (!roomSectionsRaw) return {};
     const stats = {};
-    for (const section of roomSections) {
+    for (const section of roomSectionsRaw) {
       stats[section.id] = getRoomStats(section, selections);
     }
     return stats;
-  }, [roomSections, selections]);
+  }, [roomSectionsRaw, selections]);
 
-  if (!roomSections || roomSections.length === 0) return null;
+  if (!roomSectionsRaw || roomSectionsRaw.length === 0) return null;
 
   return (
     <aside
@@ -33,7 +40,7 @@ export default function RoomSidebar() {
       aria-label="Room navigation"
     >
       <nav>
-        {roomSections.map((section) => {
+        {roomSectionsRaw.map((section) => {
           const isActive = activeRoom === section.id;
           const stats = roomStats[section.id] || {
             totalItems: 0,
@@ -41,8 +48,8 @@ export default function RoomSidebar() {
             totalSpend: 0,
           };
 
-          // When searching, dim rooms that have no items matching
-          const isDimmed = isSearchActive && stats.totalItems === 0;
+          // When searching, dim rooms that have no items matching the search
+          const isDimmed = isSearchActive && !filteredRoomIds.has(section.id);
 
           return (
             <button

@@ -33,7 +33,7 @@ function AppContent() {
 
       <div className="flex flex-1 overflow-hidden" style={{ height: 'calc(100vh - 70px)' }}>
         {viewMode !== 'compare' && (
-          browseMode === 'room' ? <RoomSidebar /> : <CategorySidebar />
+          viewMode === 'browse' && browseMode === 'room' ? <RoomSidebar /> : <CategorySidebar />
         )}
 
         <main className="flex-1 overflow-y-auto">

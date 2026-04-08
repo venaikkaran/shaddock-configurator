@@ -27,7 +27,30 @@ function SubgroupSection({
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
 
   const { categoryCode, categoryName, label, items } = subgroup;
-  const categoryGroups = groups[categoryCode] || {};
+
+  // Filter radio groups to only include items in this subgroup
+  const subgroupItemKeys = useMemo(() => {
+    const keys = new Set();
+    for (const item of items) {
+      keys.add(item.optionCode + (item.elevation ? '_' + item.elevation : ''));
+    }
+    return keys;
+  }, [items]);
+
+  const categoryGroups = useMemo(() => {
+    const fullGroups = groups[categoryCode] || {};
+    const filtered = {};
+    for (const [base, groupItems] of Object.entries(fullGroups)) {
+      const roomItems = groupItems.filter(item => {
+        const key = item.optionCode + (item.elevation ? '_' + item.elevation : '');
+        return subgroupItemKeys.has(key);
+      });
+      if (roomItems.length >= 2) {
+        filtered[base] = roomItems;
+      }
+    }
+    return filtered;
+  }, [groups, categoryCode, subgroupItemKeys]);
 
   // Build a lookup of elevationMismatch flags from the filtered items
   const itemFlagLookup = useMemo(() => {
@@ -193,15 +216,22 @@ function RoomSection({
   onClearRoom,
   elevation,
 }) {
+  const { customOptions } = useApp();
+
   const hasSelections = useMemo(() => {
     for (const subgroup of room.subgroups) {
+      if (subgroup.categoryCode === 'CU') {
+        // Check customOptions for CU items
+        if (Object.values(customOptions).some(c => c.selected)) return true;
+        continue;
+      }
       for (const item of subgroup.items) {
         const key = getSelectionKey(item);
         if (selections[key]?.selected) return true;
       }
     }
     return false;
-  }, [room.subgroups, selections]);
+  }, [room.subgroups, selections, customOptions]);
 
   // Detect flooring conflicts within this room
   const flooringConflicts = useMemo(() => {
@@ -309,7 +339,8 @@ export default function RoomView() {
     groups,
     toggleSelection,
     updateQuantity,
-    clearCategorySelections,
+    setSelections,
+    setCustomOptions,
     searchQuery,
     elevation,
   } = useApp();
@@ -339,11 +370,30 @@ export default function RoomView() {
     return room ? [room] : [];
   }, [roomSections, activeRoom, searchQuery]);
 
-  // Handler to clear all selections within a room (clears each subgroup's category)
+  // Handler to clear only the selections that belong to items in this room
   function handleClearRoom(room) {
-    const categoryCodes = new Set(room.subgroups.map(sg => sg.categoryCode));
-    for (const code of categoryCodes) {
-      clearCategorySelections(code);
+    if (!window.confirm(`Clear all selections in ${room.name}? This cannot be undone.`)) return;
+    // Collect all item keys that belong to this room
+    const roomItemKeys = new Set();
+    for (const sg of room.subgroups) {
+      if (sg.categoryCode === 'CU') continue; // Custom options handled separately
+      for (const item of sg.items) {
+        roomItemKeys.add(item.optionCode + (item.elevation ? '_' + item.elevation : ''));
+      }
+    }
+    // Remove only those selections
+    setSelections(prev => {
+      const next = {};
+      for (const [key, sel] of Object.entries(prev)) {
+        if (!roomItemKeys.has(key)) {
+          next[key] = sel;
+        }
+      }
+      return next;
+    });
+    // If room has CU subgroup, clear custom options too
+    if (room.subgroups.some(sg => sg.categoryCode === 'CU')) {
+      setCustomOptions({});
     }
   }
 

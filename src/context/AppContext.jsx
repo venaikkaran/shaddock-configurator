@@ -13,6 +13,8 @@ const LS_KEYS = {
   thresholds: 'shaddock_thresholds',
   elevation: 'shaddock_elevation',
   savedConfigs: 'shaddock_saved_configs',
+  browseMode: 'shaddock_browse_mode',
+  activeRoom: 'shaddock_active_room',
 };
 
 function loadFromLS(key, fallback) {
@@ -33,8 +35,8 @@ export function AppProvider({ children }) {
   const [activeCategory, setActiveCategory] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [viewMode, setViewMode] = useState('browse');
-  const [browseMode, setBrowseMode] = useState('room'); // 'room' | 'trade'
-  const [activeRoom, setActiveRoom] = useState(null); // room section ID for room view
+  const [browseMode, setBrowseMode] = useState(() => loadFromLS(LS_KEYS.browseMode, 'room')); // 'room' | 'trade'
+  const [activeRoom, setActiveRoom] = useState(() => loadFromLS(LS_KEYS.activeRoom, null)); // room section ID for room view
   const [wizardStep, setWizardStep] = useState(0);
   const [budget, setBudget] = useState(() => loadFromLS(LS_KEYS.budget, null));
   const [yellowThreshold, setYellowThreshold] = useState(() => {
@@ -56,10 +58,10 @@ export function AppProvider({ children }) {
         if (!activeCategory && d.categories.length > 0) {
           setActiveCategory(d.categories[0].code);
         }
-        // Set default room for room view
+        // Set default room for room view (only if not already set from localStorage)
         const rooms = mapItemsToRooms(d.categories);
         if (rooms.length > 0) {
-          setActiveRoom(rooms[0].id);
+          setActiveRoom(prev => prev ?? rooms[0].id);
         }
         setLoading(false);
       });
@@ -77,6 +79,8 @@ export function AppProvider({ children }) {
   useEffect(() => { debouncedSave(LS_KEYS.budget, budget); }, [budget]);
   useEffect(() => { debouncedSave(LS_KEYS.elevation, elevation); }, [elevation]);
   useEffect(() => { debouncedSave(LS_KEYS.savedConfigs, savedConfigs); }, [savedConfigs]);
+  useEffect(() => { debouncedSave(LS_KEYS.browseMode, browseMode); }, [browseMode]);
+  useEffect(() => { debouncedSave(LS_KEYS.activeRoom, activeRoom); }, [activeRoom]);
   useEffect(() => {
     debouncedSave(LS_KEYS.thresholds, { yellow: yellowThreshold, red: redThreshold });
   }, [yellowThreshold, redThreshold]);
@@ -199,10 +203,9 @@ export function AppProvider({ children }) {
   const budgetStatus = useMemo(() => {
     if (budget == null || budget <= 0) return 'none';
     if (totalCost <= budget) return 'under';
-    if (totalCost <= budget * (1 + yellowThreshold)) return 'yellow';
     if (totalCost <= budget * (1 + redThreshold)) return 'yellow';
     return 'red';
-  }, [totalCost, budget, yellowThreshold, redThreshold]);
+  }, [totalCost, budget, redThreshold]);
 
   // Filtered categories based on elevation + search
   // Elevation-mismatched items are kept but flagged (not removed)
@@ -336,6 +339,7 @@ export function AppProvider({ children }) {
     activeRoom,
     setActiveRoom,
     roomSections,
+    roomSectionsRaw,
     saveConfig,
     loadConfig,
     deleteConfig,

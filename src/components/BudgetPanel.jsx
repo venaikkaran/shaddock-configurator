@@ -377,7 +377,7 @@ export default function BudgetPanel() {
                               {formatCompact(
                                 (() => {
                                   // compute total from config selections if possible
-                                  return config.total != null ? config.total : config.budget;
+                                  return config.totalCost != null ? config.totalCost : config.budget;
                                 })()
                               )}
                             </span>

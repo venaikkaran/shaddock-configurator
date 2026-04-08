@@ -15,7 +15,7 @@ export default function Header({ onOpenSettings }) {
     setViewMode,
     selections,
     itemMap,
-    clearAllSelections,
+    setSelections,
     browseMode,
     setBrowseMode,
   } = useApp();
@@ -75,7 +75,17 @@ export default function Header({ onOpenSettings }) {
         e.target.value = prevElevation ?? 'all';
         return;
       }
-      clearAllSelections();
+      // Only clear the orphaned elevation-specific selections
+      const orphanedKeys = new Set(orphaned.map(([key]) => key));
+      setSelections(prev => {
+        const next = {};
+        for (const [key, sel] of Object.entries(prev)) {
+          if (!orphanedKeys.has(key)) {
+            next[key] = sel;
+          }
+        }
+        return next;
+      });
     }
 
     setElevation(newElevation);
