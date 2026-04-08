@@ -74,8 +74,7 @@ function SpotlightOverlay({ targetRect, onClickOverlay }) {
     // Full-screen dimmed overlay with no spotlight
     return (
       <div
-        className="fixed inset-0 z-[9998] bg-black/50 transition-opacity duration-300"
-        onClick={onClickOverlay}
+        className="fixed inset-0 z-[9998] bg-black/50 pointer-events-auto"
       />
     );
   }
@@ -89,8 +88,8 @@ function SpotlightOverlay({ targetRect, onClickOverlay }) {
   };
 
   return (
-    <div className="fixed inset-0 z-[9998]" onClick={onClickOverlay}>
-      <svg className="absolute inset-0 w-full h-full" style={{ pointerEvents: 'none' }}>
+    <div className="fixed inset-0 z-[9998] pointer-events-none">
+      <svg className="absolute inset-0 w-full h-full pointer-events-auto">
         <defs>
           <mask id="tutorial-spotlight-mask">
             <rect x="0" y="0" width="100%" height="100%" fill="white" />
@@ -109,7 +108,6 @@ function SpotlightOverlay({ targetRect, onClickOverlay }) {
           x="0" y="0" width="100%" height="100%"
           fill="rgba(0,0,0,0.50)"
           mask="url(#tutorial-spotlight-mask)"
-          style={{ pointerEvents: 'all' }}
         />
       </svg>
       {/* Highlight ring around the target */}
@@ -187,8 +185,7 @@ function TooltipCard({ step, stepIndex, totalSteps, targetRect, onNext, onPrev, 
     <div
       ref={cardRef}
       className="fixed z-[9999] bg-white rounded-xl shadow-2xl border border-warm-200 max-w-md w-[90vw]"
-      style={{ top: pos.top, left: pos.left, transform: pos.transform }}
-      onClick={(e) => e.stopPropagation()}
+      style={{ top: pos.top, left: pos.left, transform: pos.transform, pointerEvents: 'auto' }}
     >
       {/* Header */}
       <div className="flex items-center justify-between px-5 pt-4 pb-2">
