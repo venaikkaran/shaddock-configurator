@@ -28,15 +28,15 @@ function AppContent() {
   const totalSelected = Object.values(categoryCounts).reduce((a, b) => a + b, 0)
 
   return (
-    <div className="min-h-screen flex flex-col bg-warm-50">
+    <div className="h-screen flex flex-col bg-warm-50 overflow-hidden">
       <Header onOpenSettings={() => setSettingsOpen(true)} />
 
-      <div className="flex flex-1 overflow-hidden" style={{ height: 'calc(100vh - 70px)' }}>
+      <div className="flex flex-1 min-h-0 overflow-hidden">
         {viewMode !== 'compare' && (
           viewMode === 'browse' && browseMode === 'room' ? <RoomSidebar /> : <CategorySidebar />
         )}
 
-        <main className="flex-1 overflow-y-auto min-h-0">
+        <main className={`flex-1 min-h-0 flex flex-col ${viewMode === 'wizard' ? 'overflow-hidden' : 'overflow-y-auto'}`}>
           {viewMode === 'browse' && (
             browseMode === 'room' ? <RoomView /> : <BrowseView />
           )}
